@@ -1,0 +1,6 @@
+> Colors <- read.csv("colors.csv")
+> these_Colors <- Colors$color
+> Color_freq <- table(these_Colors)
+> barplot(Color_freq)
+> barplot(Color_freq,main="Favorite Color Frequency Plot")
+> barplot(Color_freq,main="Favorite Color Frequency Plot",xlab="Color Name",ylab="Frequency")

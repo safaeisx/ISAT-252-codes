@@ -1,0 +1,7 @@
+points=read.csv("points.csv")
+safaeisx=points[points$student=="safaeisx",]
+safaeisx
+all=points[points$student=="ALL",]
+all
+class=all[all$class=="252.2",]
+class
