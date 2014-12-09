@@ -1,0 +1,40 @@
+
+joke_map <- function(states_to_highlight, title="", highlight_colors=c("#aaaaaa", "#ee0000")) {
+   library(mapdata)
+   library(dplyr)
+   library(ggplot2)
+   library(RColorBrewer)
+   library(maps)
+   
+   highlighting = data.frame(region=tolower(state.name[match(states_to_highlight, state.abb)]), 
+                              highlight=TRUE)
+   
+   d = map_data("state") %>% left_join(highlighting, by="region")
+   d[is.na(d$highlight),]$highlight <- FALSE
+ 
+   p <- ggplot(d) + geom_polygon(aes(x=long, y=lat, 
+                                    group = group, fill=highlight), 
+                                colour="black") + 
+     scale_fill_manual(values=highlight_colors) + 
+     ggtitle(title) + 
+     xlab("") +
+     ylab("") +
+     theme(axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank()) +
+     guides(fill=FALSE)
+   
+   p
+ }
+
+map1=joke_map(states_to_highlight = c("IL"),  title = "Terrorist Attack Casualties 1865-1894", highlight_colors=c("darkorange", "red")) 
+map2=joke_map(states_to_highlight=c("IL", "NY", "WI", "CA"), title= "Terrorist Attack Casualties 1895-1924", highlight_colors=c("darkorange", "red"))
+map3=joke_map(states_to_highlight=c("NJ", "UT", "IN", "MI"), title="Terrorist Attack Casualties 1925-1954", highlight_colors=c("darkorange", "red"))
+map4=joke_map(states_to_highlight=c("CO", "TX", "NC", "MO", "AL", "CA", "MS", "NY", "NJ", "MD", "NV", "MI", "LA", "PA"), title="Terrorist Attack Casualties 1955-1984", highlight_colors=c("darkorange", "red"))
+map5=joke_map(states_to_highlight=c("NY", "PA", "CA", "OK", "TX", "CT", "VA", "CO", "MA"), title="Terrorist Attack Casualties 1985-2014", highlight_colors=c("darkorange", "red")) 
+legend("bottomleft",
+legend=c("Greater than average casualty", "Less than average casualty"),
+pch=19,
+col=c("red", "darkorange"),
+box.col="transparent",
+cex=.7,
+title="Relevance to Average",
+)
